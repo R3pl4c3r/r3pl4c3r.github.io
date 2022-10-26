@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"r3pl4c3r.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="IntroductionMany people confuse proxy and Virtual Private Network (VPN). This article explains the technical principles and application scenarios of proxy and VPN.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Explanation of Proxy and VPN">
+<meta property="og:url" content="https://r3pl4c3r.github.io/2021/03/04/Proxy-and-VPN/index.html">
+<meta property="og:site_name" content="R3pl4c3r&#39;s Blog">
+<meta property="og:description" content="IntroductionMany people confuse proxy and Virtual Private Network (VPN). This article explains the technical principles and application scenarios of proxy and VPN.">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-03-04T06:59:14.000Z">
+<meta property="article:modified_time" content="2022-06-23T10:58:56.145Z">
+<meta property="article:author" content="R3pl4c3r">
+<meta property="article:tag" content="Proxy">
+<meta property="article:tag" content="VPN">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://r3pl4c3r.github.io/2021/03/04/Proxy-and-VPN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Explanation of Proxy and VPN | R3pl4c3r's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">R3pl4c3r's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://r3pl4c3r.github.io/2021/03/04/Proxy-and-VPN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="R3pl4c3r">
+      <meta itemprop="description" content="R3pl4c3r's Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3pl4c3r's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Explanation of Proxy and VPN
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-04 14:59:14" itemprop="dateCreated datePublished" datetime="2021-03-04T14:59:14+08:00">2021-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-06-23 18:58:56" itemprop="dateModified" datetime="2022-06-23T18:58:56+08:00">2022-06-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2021/03/04/Proxy-and-VPN/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/04/Proxy-and-VPN/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Many people confuse proxy and Virtual Private Network (VPN). This article explains the technical principles and application scenarios of proxy and VPN.</p>
+<span id="more"></span>
+<h1 id="What-is-a-proxy-server"><a href="#What-is-a-proxy-server" class="headerlink" title="What is a proxy server?"></a>What is a proxy server?</h1><p>“In computer networking, a proxy server is a server application or appliance that acts as an intermediary for requests from clients seeking resources from servers that provide those resources. A proxy server thus functions on behalf of the client when requesting service, potentially masking the true origin of the request to the resource server.</p>
+<p>“Instead of connecting directly to a server that can fulfil a requested resource, such as a file or web page, the client directs the request to the proxy server, which evaluates the request and performs the required network transactions. This serves as a method to simplify or control the complexity of the request, or provide additional benefits such as load balancing, privacy, or security. Proxies were devised to add structure and encapsulation to distributed systems.” (Wikipedia)</p>
+<p>If using appropriate protocol and encryption method, the proxy server can also be used for anti-censorship.</p>
+<h1 id="How-does-a-proxy-server-work"><a href="#How-does-a-proxy-server-work" class="headerlink" title="How does a proxy server work?"></a>How does a proxy server work?</h1><p>“When you send a web request, your request goes to the proxy server first. The proxy server then makes your web request on your behalf, collects the response from the web server, and forwards you the web page data so you can see the page in your browser.” (varonis)</p>
+<p>When the proxy server forwards your web requests, it can make changes to the data you send and still get you the information that you expect to see. A proxy server can change your IP address, so the web server doesn’t know exactly where you are in the world. It can encrypt your data, so your data is unreadable in transit. And lastly, a proxy server can block access to certain web pages, based on domain or IP address. The most common protocols on local computers are HTTP(S) and SOCKS proxies.</p>
+<h1 id="What-is-a-VPN"><a href="#What-is-a-VPN" class="headerlink" title="What is a VPN?"></a>What is a VPN?</h1><p>A Virtual Private Network (VPN) client on your computer establishes a secure tunnel with the VPN server, replacing your local ISP routing. VPN connections encrypt and secure all of your network traffic, not just the HTTP or SOCKS calls from your browser like a proxy server.</p>
+<h1 id="How-does-a-VPN-work"><a href="#How-does-a-VPN-work" class="headerlink" title="How does a VPN work?"></a>How does a VPN work?</h1><p>A VPN client will send <strong>all</strong> of your traffic to the VPN server through the VPN tunnel. Then the client will get an IP address from the server, as if the client is under the same Local Area Network (LAN) as the VPN server.</p>
+<p>Therefore, people can easily access resources on the remote LAN by using a VPN such as SoftEther, Cisco AnyConnect and OpenVPN.</p>
+<h1 id="What-is-the-difference"><a href="#What-is-the-difference" class="headerlink" title="What is the difference?"></a>What is the difference?</h1><ol>
+<li>Proxy client is served externally through the port. You can control which traffic goes to the proxy server by controlling the traffic going to proxy client’s port. However, VPN client will send all your traffic to the remote server and virtually group the network.</li>
+<li>When using a proxy client, you can decide whether to encrypt your traffic depending on the network condition and the proxy protocol, but if using a VPN client, all of the traffic will be encrypted by using their encryption method.</li>
+<li>With the advancement of technology, proxy protocols can have a relatively high performance and a secure enough traffic. Nevertheless, VPN protocols seem to have a relatively bad performance.</li>
+<li>Proxy protocols can be designed to have few characteristics that differ from normal traffic, which can be used for anti-censorship, but a VPN protocol have distinct characteristics that can be easily identified and blocked by the censor.</li>
+</ol>
+<h1 id="What-are-application-scenarios"><a href="#What-are-application-scenarios" class="headerlink" title="What are application scenarios?"></a>What are application scenarios?</h1><ol>
+<li>If you want to break out of the regional restrictions of some Internet media such as Netflix, then both proxy and VPN can be used, provided that Netflix has not banned your IP address.</li>
+<li>If you want to have a diverse internet experience, such as using an anonymous network when accessing certain social media, but want to use your real network when visiting normal websites, then you need to use a proxy server and client and take advantage of some modern diversion tools based on rule such as <a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash">Clash</a>, <a target="_blank" rel="noopener" href="https://github.com/XTLS/Xray-core">Xray-core</a> and <a target="_blank" rel="noopener" href="https://github.com/v2fly/v2ray-core">V2Ray-core</a>.</li>
+<li>If you want to access your LAN of your home and need a secure way to access it, then you need you use a VPN server and client. Or you want to access your company or school network, you definitely need to use a VPN client.</li>
+<li>If you want to use for anti-censorship, <a target="_blank" rel="noopener" href="https://github.com/klzgrad/naiveproxy">NaïveProxy</a> (which is able to use Chrome’s TLS fingerprint and has the least characteristics that differ from normal traffic among the following protocols), Vmess protocol with TLS encryption, Vmess protocol with WebSocket with TLS encryption (traffic heads to proxy server can be distributed by a CDN like Cloudflare, which can hide the real proxy server IP address), Vless protocol with XTLS encryption (which has the best performance) and <a target="_blank" rel="noopener" href="https://github.com/trojan-gfw/trojan">Trojan</a> protocol are all ideal choices. (Vmess protocol and Vless protocol are provided by <a target="_blank" rel="noopener" href="https://github.com/XTLS/Xray-core">Xray-core</a> and <a target="_blank" rel="noopener" href="https://github.com/v2fly/v2ray-core">V2Ray-core</a>. All the protocols must run over the TLS encryption to ensure the effect of anti-censorship. Vless protocol can be encrypted by XTLS (Performance-oriented modified version of TLS encryption) and then have a better performance, but XTLS encryption is only available in <a target="_blank" rel="noopener" href="https://github.com/XTLS/Xray-core">Xray-core</a>.)</li>
+</ol>
+<h1 id="References"><a href="#References" class="headerlink" title="References:"></a>References:</h1><ol>
+<li><em>‘Proxy server’</em>, Wikipedia. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Proxy_server">https://en.wikipedia.org/wiki/Proxy_server</a></li>
+<li><em>‘What is a Proxy Server’</em>, varonis. <a target="_blank" rel="noopener" href="https://www.varonis.com/blog/what-is-a-proxy-server/">https://www.varonis.com/blog/what-is-a-proxy-server/</a></li>
+<li><em>‘What’s The Difference Between a Proxy and a VPN?’</em>, varonis. <a target="_blank" rel="noopener" href="https://www.varonis.com/blog/proxy-vs-vpn/">https://www.varonis.com/blog/proxy-vs-vpn/</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Proxy/" rel="tag"># Proxy</a>
+              <a href="/tags/VPN/" rel="tag"># VPN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/06/emby-unlock/" rel="prev" title="Emby 全平台解锁教程">
+      <i class="fa fa-chevron-left"></i> Emby 全平台解锁教程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/11/R6-Voice-Solution/" rel="next" title="彩虹六号语音问题解决方案">
+      彩虹六号语音问题解决方案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-is-a-proxy-server"><span class="nav-number">2.</span> <span class="nav-text">What is a proxy server?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-does-a-proxy-server-work"><span class="nav-number">3.</span> <span class="nav-text">How does a proxy server work?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-is-a-VPN"><span class="nav-number">4.</span> <span class="nav-text">What is a VPN?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How-does-a-VPN-work"><span class="nav-number">5.</span> <span class="nav-text">How does a VPN work?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-is-the-difference"><span class="nav-number">6.</span> <span class="nav-text">What is the difference?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What-are-application-scenarios"><span class="nav-number">7.</span> <span class="nav-text">What are application scenarios?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References:</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="R3pl4c3r"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">R3pl4c3r</p>
+  <div class="site-description" itemprop="description">R3pl4c3r's Blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/r3pl4c3r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;r3pl4c3r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/14123164/r3pl4c3r" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;14123164&#x2F;r3pl4c3r" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R3pl4c3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'IVuryakTHAdPRNl9296MP55J-gzGzoHsz',
+      appKey     : 'JJheHz7GdN4i2wSr4qiqaloW',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
